@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="sidebar">
+    <button class="menu-item" (click)="cargarCandidatos()">Cargar Candidatos</button>
+    <button class="menu-item" (click)="cargarVotantes()">Cargar Votantes</button>
+    <button class="menu-item" (click)="consultarResultados()">Consultar Resultados</button>
+  </div>
+
+  <div class="main-content">
+    <div class="header">
+      <h2>Panel Administrador</h2>
+      <div class="user-info">
+        <span>(Admin){{ nombreUsuario }}</span>
+        <button class="btn-cerrar" (click)="cerrarSesion()">Cerrar Sesión</button>
+      </div>
+    </div>
+
+    <div class="logo-top">
+      <img src="assets/th.webp" alt="Registraduría Nacional del Estado Civil" class="logo-circular">
+    </div>
+
+    <div class="welcome">
+      <h3>Bienvenido {{ nombreUsuario }}.</h3>
+    </div>
+  </div>
+</div>

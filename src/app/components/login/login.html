@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="logo-top">
+    <img src="assets/th.webp" alt="Registraduría Nacional del Estado Civil" class="logo-circular">
+  </div>
+
+  <div class="login-box">
+    <h2>Inicio de Sesión</h2>
+
+    <div class="form-group">
+      <label>Usuario:</label>
+      <input
+        type="text"
+        [(ngModel)]="usuario"
+        placeholder="Ingrese su usuario"
+        class="input-field">
+    </div>
+
+    <div class="form-group">
+      <label>Contraseña:</label>
+      <input
+        type="password"
+        [(ngModel)]="contrasena"
+        placeholder="Ingrese su contraseña"
+        class="input-field">
+    </div>
+
+    <div *ngIf="errorMessage" class="error">
+      {{ errorMessage }}
+    </div>
+
+    <button (click)="iniciarSesion()" class="btn-login">Iniciar Sesión</button>
+  </div>
+</div>

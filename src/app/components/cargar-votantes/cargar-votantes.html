@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="sidebar">
+    <button class="menu-item" (click)="cargarCandidatos()">Cargar Candidatos</button>
+    <button class="menu-item active" (click)="cargarVotantes()">Cargar Votantes</button>
+    <button class="menu-item" (click)="consultarResultados()">Consultar Resultados</button>
+  </div>
+
+  <div class="main-content">
+    <div class="header">
+      <h2>Elecciones presidenciales 2025</h2>
+      <div class="user-info">
+        <span>(Admin){{ nombreUsuario }}</span>
+        <button class="btn-cerrar" (click)="cerrarSesion()">Cerrar Sesión</button>
+      </div>
+    </div>
+
+    <div class="logo-top">
+      <img src="assets/th.webp" alt="Registraduría Nacional del Estado Civil" class="logo-circular">
+    </div>
+
+    <div class="upload-section">
+      <h3>Cargar votantes</h3>
+
+      <div
+        class="drop-zone"
+        (dragover)="onDragOver($event)"
+        (drop)="onDrop($event)">
+
+        <div class="upload-icon">☁️</div>
+        <p class="drag-text">Drag&Drop files here</p>
+        <p class="or-text">or</p>
+
+        <label for="file-upload-votantes" class="btn-browse">Browse Files</label>
+        <input
+          id="file-upload-votantes"
+          type="file"
+          accept=".csv"
+          (change)="onFileSelected($event)"
+          style="display: none;">
+      </div>
+
+      <div *ngIf="fileName" class="file-info">
+        <p>Archivo seleccionado: <strong>{{ fileName }}</strong></p>
+        <button class="btn-cargar" (click)="cargarArchivo()">Cargar Archivo</button>
+      </div>
+
+      <button class="btn-volver" (click)="volver()">Volver</button>
+    </div>
+  </div>
+</div>
