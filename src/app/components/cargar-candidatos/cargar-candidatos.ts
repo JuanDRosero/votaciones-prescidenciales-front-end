@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth';
+import { AdminApiService } from '../../services/admin-service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-cargar-candidatos',
@@ -17,7 +19,8 @@ export class CargarCandidatosComponent {
 
   constructor(
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private adminService: AdminApiService
   ) {
     const user = this.authService.getCurrentUser();
     this.nombreUsuario = user || 'Usuario';
@@ -54,10 +57,10 @@ export class CargarCandidatosComponent {
     }
   }
 
-  cargarArchivo(): void {
+  async cargarArchivo() {
     if (this.selectedFile) {
-      console.log('Archivo a cargar:', this.selectedFile);
-      alert(`Archivo ${this.fileName} listo para enviar al backend`);
+      const response = await firstValueFrom(this.adminService.uploadCandidate(this.selectedFile));
+      console.log("Se cargarón un total del %d registros",response.data);
     }
   }
 
