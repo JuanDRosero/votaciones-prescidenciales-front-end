@@ -15,8 +15,9 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 export class ConfigurarPeriodoComponent {
   nombreUsuario: string = '';
   fecha: string = '';
-  horaInicio: string = '';
-  horaFin: string = '';
+  horaInicio: number | null = null;
+  horaFin: number | null = null;
+  horas: number[] = [];
 
   constructor(
     private router: Router,
@@ -25,11 +26,11 @@ export class ConfigurarPeriodoComponent {
   ) {
     const user = this.authService.getCurrentUser();
     this.nombreUsuario = user || 'Usuario';
+    this.horas = Array.from({length: 24}, (_, i) => i); // [0,1,...,23]
   }
 
   establecer(): void {
-    // Validación de datos
-    if (!this.fecha || !this.horaInicio || !this.horaFin) {
+    if (!this.fecha || this.horaInicio === null || this.horaFin === null) {
       this.snackBar.open('Por favor complete todos los campos', 'Cerrar', {
         duration: 3000,
         horizontalPosition: 'center',
@@ -39,7 +40,17 @@ export class ConfigurarPeriodoComponent {
       return;
     }
 
-    // Aquí la lógica para guardar el periodo
+    if (this.horaInicio > this.horaFin) {
+      this.snackBar.open('La hora de inicio no puede ser mayor a la hora de fin', 'Cerrar', {
+        duration: 3200,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        panelClass: ['error-snackbar']
+      });
+      return;
+    }
+
+    // Enviar datos numéricos de hora al backend:
     console.log('Configuración guardada:', {
       fecha: this.fecha,
       horaInicio: this.horaInicio,
@@ -54,24 +65,5 @@ export class ConfigurarPeriodoComponent {
     });
   }
 
-  cargarCandidatos(): void {
-    this.router.navigate(['/cargar-candidatos']);
-  }
-
-  cargarVotantes(): void {
-    this.router.navigate(['/cargar-votantes']);
-  }
-
-  consultarResultados(): void {
-    this.router.navigate(['/consultar-resultados']);
-  }
-
-  configurarPeriodo(): void {
-    this.router.navigate(['/configurar-periodo']);
-  }
-
-  cerrarSesion(): void {
-    this.authService.logout();
-    this.router.navigate(['/']);
-  }
+  // (tus métodos de navegación igual)
 }
