@@ -15,8 +15,8 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 export class ConfigurarPeriodoComponent {
   nombreUsuario: string = '';
   fecha: string = '';
-  hora: string = '';
-  vuelta: number | null = null;
+  horaInicio: string = '';
+  horaFin: string = '';
 
   constructor(
     private router: Router,
@@ -28,7 +28,8 @@ export class ConfigurarPeriodoComponent {
   }
 
   establecer(): void {
-    if (!this.fecha || !this.hora || this.vuelta === null) {
+    // Validación de datos
+    if (!this.fecha || !this.horaInicio || !this.horaFin) {
       this.snackBar.open('Por favor complete todos los campos', 'Cerrar', {
         duration: 3000,
         horizontalPosition: 'center',
@@ -38,12 +39,11 @@ export class ConfigurarPeriodoComponent {
       return;
     }
 
-    // Agregar la llamada a la API
-
+    // Aquí la lógica para guardar el periodo
     console.log('Configuración guardada:', {
       fecha: this.fecha,
-      hora: this.hora,
-      vuelta: this.vuelta
+      horaInicio: this.horaInicio,
+      horaFin: this.horaFin
     });
 
     this.snackBar.open('✓ Periodo de votación configurado exitosamente', 'Cerrar', {
