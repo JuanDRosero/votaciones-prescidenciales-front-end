@@ -1,0 +1,103 @@
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* NO hay sidebar para votante, así que no incluyas .sidebar ni .menu-item */
+
+/* Main content igual que el admin */
+.main-content {
+  flex: 1;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header idéntico */
+.header {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  z-index: 10;
+  position: relative;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.btn-cerrar {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid white;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-cerrar:hover {
+  background: white;
+  color: #1e3c72;
+}
+
+/* Logo igual que admin */
+.logo-top {
+  position: fixed;
+  top: 80px;
+  right: 32px;
+  pointer-events: none;
+  z-index: 1;
+  background: none;
+  border-radius: 0;
+  padding: 0;
+}
+
+.logo-circular {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 12px #16385a44;
+}
+
+/* Contenido para bienvenida y botón */
+.contenido-votante {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 130px;
+}
+
+.btn-iniciar-voto {
+  font-size: 1.25em;
+  background: #210942;
+  color: #fff;
+  border-radius: 7px;
+  border: none;
+  padding: 18px 48px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 18px;
+  transition: background 0.2s;
+}
+.btn-iniciar-voto:hover {
+  background: #311a79;
+}
+
+::ng-deep router-outlet + * {
+  position: relative;
+  z-index: 5;
+}

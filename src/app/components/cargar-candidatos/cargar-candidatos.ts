@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth';
 import { AdminApiService } from '../../services/admin-service';
 import { firstValueFrom } from 'rxjs';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-cargar-candidatos',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatSnackBarModule],
   templateUrl: './cargar-candidatos.html',
   styleUrl: './cargar-candidatos.css'
 })
@@ -20,7 +21,8 @@ export class CargarCandidatosComponent {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private adminService: AdminApiService
+    private adminService: AdminApiService,
+    private snackBar: MatSnackBar
   ) {
     const user = this.authService.getCurrentUser();
     this.nombreUsuario = user || 'Usuario';
@@ -32,7 +34,12 @@ export class CargarCandidatosComponent {
       this.selectedFile = file;
       this.fileName = file.name;
     } else {
-      alert('Por favor seleccione un archivo CSV');
+      this.snackBar.open('Por favor seleccione un archivo CSV', 'Cerrar', {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        panelClass: ['error-snackbar']
+      });
     }
   }
 
@@ -52,15 +59,50 @@ export class CargarCandidatosComponent {
         this.selectedFile = file;
         this.fileName = file.name;
       } else {
-        alert('Por favor seleccione un archivo CSV');
+        this.snackBar.open('Por favor seleccione un archivo CSV', 'Cerrar', {
+          duration: 3000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['error-snackbar']
+        });
       }
     }
   }
 
   async cargarArchivo() {
     if (this.selectedFile) {
-      const response = await firstValueFrom(this.adminService.uploadCandidate(this.selectedFile));
-      console.log("Se cargarón un total del %d registros",response.data);
+      try {
+        const response = await firstValueFrom(this.adminService.uploadCandidate(this.selectedFile));
+        console.log("Se cargaron un total de %d registros", response.data);
+
+
+        this.snackBar.open(`✓ Se cargaron exitosamente ${response.data} candidatos`, 'Cerrar', {
+          duration: 4000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['success-snackbar']
+        });
+
+
+        this.selectedFile = null;
+        this.fileName = '';
+
+      } catch (error) {
+        console.error('Error al cargar candidatos:', error);
+        this.snackBar.open('✗ Error al cargar el archivo de candidatos', 'Cerrar', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['error-snackbar']
+        });
+      }
+    } else {
+      this.snackBar.open('Por favor seleccione un archivo primero', 'Cerrar', {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        panelClass: ['error-snackbar']
+      });
     }
   }
 
@@ -73,7 +115,7 @@ export class CargarCandidatosComponent {
   }
 
   consultarResultados(): void {
-    alert('Función en desarrollo');
+    this.router.navigate(['/consultar-resultados']);
   }
 
   volver(): void {

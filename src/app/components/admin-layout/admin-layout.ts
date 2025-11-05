@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth';
 
 @Component({
-  selector: 'app-admin-panel',
+  selector: 'app-admin-layout',
   standalone: true,
-  imports: [CommonModule],
-  templateUrl: './admin-panel.html',
-  styleUrl: './admin-panel.css'
+  imports: [CommonModule, RouterOutlet],
+  templateUrl: './admin-layout.html',
+  styleUrl: './admin-layout.css'
 })
-export class AdminPanelComponent implements OnInit {
+export class AdminLayoutComponent implements OnInit {
   nombreUsuario: string = '';
 
   constructor(
@@ -24,23 +24,27 @@ export class AdminPanelComponent implements OnInit {
   }
 
   cargarCandidatos(): void {
-    this.router.navigate(['/cargar-candidatos']);
+    this.router.navigate(['/admin/cargar-candidatos']);
   }
 
   cargarVotantes(): void {
-    this.router.navigate(['/cargar-votantes']);
+    this.router.navigate(['/admin/cargar-votantes']);
   }
 
   configurarPeriodo(): void {
-    this.router.navigate(['/configurar-periodo']);
+    this.router.navigate(['/admin/configurar-periodo']);
   }
 
   consultarResultados(): void {
-     this.router.navigate(['/consultar-resultados']);
+    this.router.navigate(['/admin/consultar-resultados']);
   }
 
   cerrarSesion(): void {
     this.authService.logout();
     this.router.navigate(['/']);
+  }
+
+  isActive(route: string): boolean {
+    return this.router.url.includes(route);
   }
 }

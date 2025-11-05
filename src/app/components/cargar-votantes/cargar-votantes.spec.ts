@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CargarVotantes } from './cargar-votantes';
+import { CargarVotantesComponent } from './cargar-votantes';
 
 describe('CargarVotantes', () => {
-  let component: CargarVotantes;
-  let fixture: ComponentFixture<CargarVotantes>;
+  let component: CargarVotantesComponent;
+  let fixture: ComponentFixture<CargarVotantesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CargarVotantes]
+      imports: [CargarVotantesComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CargarVotantes);
+    fixture = TestBed.createComponent(CargarVotantesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

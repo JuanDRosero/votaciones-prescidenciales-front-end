@@ -1,0 +1,70 @@
+<!-- Título -->
+<div class="titulo-elecciones">
+  Elecciones Presidenciales 2025
+</div>
+
+<!-- Texto de información para el usuario -->
+<div class="info-usuario">
+  Seleccione el candidato de su preferencia haciendo clic sobre la foto correspondiente al candidato y posteriormente confirme su voto con la opción SI que se desplegará en un mensaje de confirmación
+</div>
+
+<!-- Grid de candidatos, máximo 3 por fila, todos del mismo tamaño -->
+<div class="candidatos-grid">
+  <div
+    class="candidato-card"
+    *ngFor="let c of candidatos"
+    (click)="seleccionarCandidato(c)"
+    tabindex="0"
+    aria-label="Seleccionar candidato {{c.nombre}}"
+  >
+    <div class="frame-img-box">
+      <ng-container *ngIf="c.id !== 'blanco'; else votoBlancoBlock">
+        <img src="assets/candidato.png" class="candidato-img" alt="Foto de {{c.nombre}}" />
+      </ng-container>
+      <ng-template #votoBlancoBlock>
+        <div class="candidato-blanco-box">
+          <span class="blanco-text">Voto en Blanco</span>
+        </div>
+      </ng-template>
+    </div>
+    <ng-container *ngIf="c.id !== 'blanco'">
+      <div class="info-candidato nombre">{{ c.nombre }}</div>
+      <div class="info-candidato numero">N° {{ c.numero }}</div>
+      <div class="info-candidato partido">{{ c.partido }}</div>
+    </ng-container>
+    <ng-container *ngIf="c.id === 'blanco'">
+      <div style="height:66px;"></div>
+    </ng-container>
+  </div>
+</div>
+
+
+<!-- Pop-up de confirmación del voto -->
+<div class="popup-confirm" *ngIf="mostrarConfirmacion">
+  <div class="popup-card">
+    <div class="popup-msg">
+      ¿Desea confirmar su voto por el candidato <br>
+      <b>{{ candidatoSeleccionado?.nombre }}</b>?
+    </div>
+    <div class="popup-btns">
+      <button class="btn-si" (click)="confirmarVoto()">SÍ</button>
+      <button class="btn-no" (click)="cancelarVoto()">NO</button>
+    </div>
+  </div>
+</div>
+
+<!-- Pop-up de certificado electoral con botón X -->
+<div class="popup-confirm" *ngIf="mostrarCertificado">
+  <div class="popup-card">
+    <button class="btn-cerrar-popup" (click)="cerrarCertificado()" aria-label="Cerrar pop-up">&#10006;</button>
+    <div class="popup-msg">
+      Se ha emitido su voto.<br>
+      Su certificado electoral se enviará al correo registrado.
+    </div>
+    <div class="popup-btns">
+      <button class="btn-certificado" (click)="descargarCertificado()">
+        Descargar certificado
+      </button>
+    </div>
+  </div>
+</div>

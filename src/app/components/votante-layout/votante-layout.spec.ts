@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HomeComponent } from './home';
+import { VotanteLayout } from './votante-layout';
 
-describe('Home', () => {
-  let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
+describe('VotanteLayout', () => {
+  let component: VotanteLayout;
+  let fixture: ComponentFixture<VotanteLayout>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HomeComponent]
+      imports: [VotanteLayout]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(HomeComponent);
+    fixture = TestBed.createComponent(VotanteLayout);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

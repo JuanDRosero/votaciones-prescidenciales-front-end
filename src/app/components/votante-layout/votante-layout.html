@@ -1,0 +1,20 @@
+<div class="container">
+  <!-- NO sidebar para votante -->
+
+  <div class="main-content">
+    <div class="header">
+      <h2>Panel Votante</h2>
+      <div class="user-info">
+        <span>{{ nombreUsuario }} (Votante)</span>
+        <button class="btn-cerrar" (click)="cerrarSesion()">Cerrar Sesión</button>
+      </div>
+    </div>
+
+    <div class="logo-top">
+      <img src="assets/th.webp" alt="Registraduría Nacional del Estado Civil" class="logo-circular">
+    </div>
+
+    <!-- Aquí se renderiza el contenido de cada página (bienvenida, votar, etc) -->
+    <router-outlet></router-outlet>
+  </div>
+</div>

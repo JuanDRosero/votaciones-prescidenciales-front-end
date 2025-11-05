@@ -22,10 +22,13 @@ export class LoginComponent {
   ) {}
 
   iniciarSesion(): void {
-    if (this.authService.login(this.usuario, this.contrasena)) {
-      this.router.navigate(['/admin']);
-    } else {
-      this.errorMessage = 'Usuario o contraseña incorrectos';
-    }
+  const role = this.authService.login(this.usuario, this.contrasena);
+  if (role === 'admin') {
+    this.router.navigate(['/admin']);
+  } else if (role === 'votante') {
+    this.router.navigate(['/votante']);
+  } else {
+    this.errorMessage = 'Usuario o contraseña incorrectos';
   }
+}
 }

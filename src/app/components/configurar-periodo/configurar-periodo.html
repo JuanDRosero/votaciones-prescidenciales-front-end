@@ -1,0 +1,34 @@
+
+    <div class="config-section">
+      <h3>Configurar periodo de votacion</h3>
+
+      <div class="form-container">
+        <div class="form-group">
+          <label>Fecha</label>
+          <input
+            type="date"
+            [(ngModel)]="fecha"
+            class="input-field">
+        </div>
+
+        <div class="form-group">
+          <label>Hora</label>
+          <input
+            type="time"
+            step="1"
+            [(ngModel)]="hora"
+            class="input-field">
+        </div>
+
+        <div class="form-group">
+          <label>Vuelta</label>
+          <input
+            type="number"
+            [(ngModel)]="vuelta"
+            placeholder="Ingrese número de vuelta"
+            class="input-field">
+        </div>
+
+        <button class="btn-establecer" (click)="establecer()">Establecer</button>
+      </div>
+    </div>

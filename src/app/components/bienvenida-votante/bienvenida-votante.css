@@ -1,0 +1,30 @@
+.contenido-votante {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 120px;
+}
+
+.contenido-votante h3 {
+  color: #fff;
+  font-size: 1.6em;
+  margin-bottom: 38px;
+}
+
+.btn-iniciar-voto {
+  font-size: 1.35em;
+  background: #210942;
+  color: #fff;
+  border-radius: 7px;
+  border: none;
+  padding: 18px 50px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: background 0.2s;
+}
+
+.btn-iniciar-voto:hover {
+  background: #311a79;
+}
