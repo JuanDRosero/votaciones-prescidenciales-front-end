@@ -88,3 +88,51 @@
 .btn-login:hover {
   background: #2a5298;
 }
+
+/* ===== SWITCH PERFIL ===== */
+.switch-group {
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.switch-label {
+  color: #1e3c72;
+  font-weight: 500;
+  margin-right: 12px;
+  min-width: 60px;
+  text-align: right;
+}
+
+.role-switch {
+  background: #f4f4ff;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  padding: 4px 10px;
+  gap: 10px;
+}
+
+.switch-radio {
+  display: none;
+}
+
+.switch-btn {
+  display: inline-block;
+  padding: 7px 20px;
+  border-radius: 17px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #1e3c72;
+  background: none;
+  border: none;
+  transition: background 0.22s, color 0.22s;
+}
+
+.switch-radio:checked + .switch-btn {
+  background: #1e3c72;
+  color: #fff;
+  font-weight: bold;
+  box-shadow: 0 1px 4px #16385a22;
+}
