@@ -15,11 +15,11 @@
     *ngFor="let c of candidatos"
     (click)="seleccionarCandidato(c)"
     tabindex="0"
-    aria-label="Seleccionar candidato {{c.nombre}}"
+    aria-label="Seleccionar candidato {{c.name}}"
   >
     <div class="frame-img-box">
-      <ng-container *ngIf="c.id !== 'blanco'; else votoBlancoBlock">
-        <img src="assets/candidato.png" class="candidato-img" alt="Foto de {{c.nombre}}" />
+      <ng-container *ngIf="c.id === -1; else votoBlancoBlock">
+        <img src="assets/candidato.png" class="candidato-img" alt="Foto de {{c.name}}" />
       </ng-container>
       <ng-template #votoBlancoBlock>
         <div class="candidato-blanco-box">
@@ -27,12 +27,12 @@
         </div>
       </ng-template>
     </div>
-    <ng-container *ngIf="c.id !== 'blanco'">
-      <div class="info-candidato nombre">{{ c.nombre }}</div>
-      <div class="info-candidato numero">N° {{ c.numero }}</div>
-      <div class="info-candidato partido">{{ c.partido }}</div>
+    <ng-container *ngIf="c.id === -1">
+      <div class="info-candidato nombre">{{ c.name }}</div>
+      <div class="info-candidato numero">N° {{ c.id }}</div>  <!--Jordi hay que modificar esto-->
+      <div class="info-candidato partido">{{ c.politicalParty }}</div>
     </ng-container>
-    <ng-container *ngIf="c.id === 'blanco'">
+    <ng-container *ngIf="c.id === -1">
       <div style="height:66px;"></div>
     </ng-container>
   </div>
@@ -44,7 +44,7 @@
   <div class="popup-card">
     <div class="popup-msg">
       ¿Desea confirmar su voto por el candidato <br>
-      <b>{{ candidatoSeleccionado?.nombre }}</b>?
+      <b>{{ candidatoSeleccionado?.name }}</b>?
     </div>
     <div class="popup-btns">
       <button class="btn-si" (click)="confirmarVoto()">SÍ</button>

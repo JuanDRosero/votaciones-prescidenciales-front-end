@@ -72,7 +72,7 @@ export interface VotingRoundInfoDtoResult {
 @Injectable({
   providedIn: 'root'
 })
-export class appService {
+export class AppService {
   private baseUrl = 'http://localhost:5212'; // <-- Cambia esto
 
   constructor(private http: HttpClient) {}

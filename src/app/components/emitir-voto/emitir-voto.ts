@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { appService, CandidateInfoDto, VoteInputDto } from '../../services/app-service';
+import { AppService, CandidateInfoDto, VoteInputDto } from '../../services/app-service';
 
 @Component({
   selector: 'app-emitir-voto',
@@ -14,7 +14,7 @@ export class EmitirVotoComponent {
   identificationVoter: number=1100000001;
   candidatos: CandidateInfoDto[] = [];
 
-  constructor (private appService : appService){
+  constructor (private appService : AppService){
     this.obtenerCandidatos(this.idVotingRound);
   }
 
