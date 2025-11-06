@@ -15,6 +15,7 @@ export class LoginComponent {
   usuario: string = '';
   contrasena: string = '';
   errorMessage: string = '';
+  rolSeleccionado: 'admin' | 'votante' = 'votante';
 
   constructor(
     private router: Router,
@@ -22,13 +23,13 @@ export class LoginComponent {
   ) {}
 
   iniciarSesion(): void {
-  const role = this.authService.login(this.usuario, this.contrasena);
-  if (role === 'admin') {
-    this.router.navigate(['/admin']);
-  } else if (role === 'votante') {
-    this.router.navigate(['/votante']);
-  } else {
-    this.errorMessage = 'Usuario o contraseña incorrectos';
+    const role = this.authService.login(this.usuario, this.contrasena, this.rolSeleccionado);
+    if (role === 'admin') {
+      this.router.navigate(['/admin']);
+    } else if (role === 'votante') {
+      this.router.navigate(['/votante']);
+    } else {
+      this.errorMessage = 'Usuario o contraseña incorrectos para el perfil seleccionado';
+    }
   }
-}
 }

@@ -6,6 +6,17 @@
   <div class="login-box">
     <h2>Inicio de Sesión</h2>
 
+    <!-- Selector de perfil -->
+    <div class="form-group switch-group">
+      <label class="switch-label">Perfil:</label>
+      <div class="role-switch">
+        <input type="radio" id="rolVotante" name="rol" [(ngModel)]="rolSeleccionado" [value]="'votante'" class="switch-radio" />
+        <label for="rolVotante" class="switch-btn">Votante</label>
+        <input type="radio" id="rolAdmin" name="rol" [(ngModel)]="rolSeleccionado" [value]="'admin'" class="switch-radio" />
+        <label for="rolAdmin" class="switch-btn">Administrador</label>
+      </div>
+    </div>
+
     <div class="form-group">
       <label>Usuario:</label>
       <input
