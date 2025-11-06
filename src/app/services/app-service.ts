@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-// =====================
-// Interfaces (modelos)
-// =====================
+import { Result } from './admin-service';
 
 export interface VoterLoginDto {
   identificationNumber: number;
@@ -16,27 +13,10 @@ export interface TokenInfoDto {
   ttl: number;
 }
 
-export interface TokenInfoDtoResult {
-  hasError: boolean;
-  message?: string;
-  data?: TokenInfoDto;
-}
 
 export interface VoteInputDto {
   idVotingRound: number;
   idCandidate: number;
-}
-
-export interface BooleanResult {
-  hasError: boolean;
-  message?: string;
-  data: boolean;
-}
-
-export interface BooleanNullableResult {
-  hasError: boolean;
-  message?: string;
-  data?: boolean | null;
 }
 
 export interface CandidateInfoDto {
@@ -46,28 +26,12 @@ export interface CandidateInfoDto {
   politicalParty?: string;
 }
 
-export interface CandidateInfoDtoIEnumerableResult {
-  hasError: boolean;
-  message?: string;
-  data?: CandidateInfoDto[] | null;
-}
-
 export interface VotingRoundInfoDto {
   votingRoundId: number;
   votingRoundDate: string; // formato date (YYYY-MM-DD)
   beginningHour: number;
   endingHour: number;
 }
-
-export interface VotingRoundInfoDtoResult {
-  hasError: boolean;
-  message?: string;
-  data?: VotingRoundInfoDto;
-}
-
-// =====================
-// Servicio Angular
-// =====================
 
 @Injectable({
   providedIn: 'root'
@@ -77,28 +41,28 @@ export class AppService {
 
   constructor(private http: HttpClient) {}
 
-  login(body: VoterLoginDto): Observable<TokenInfoDtoResult> {
-    return this.http.post<TokenInfoDtoResult>(
+  login(body: VoterLoginDto): Observable<Result<TokenInfoDto>> {
+    return this.http.post<Result<TokenInfoDto>>(
       `${this.baseUrl}/api/Voter/login`,
       body
     );
   }
 
-  vote(id: number, body: VoteInputDto): Observable<BooleanNullableResult> {
-    return this.http.post<BooleanNullableResult>(
+  vote(id: number, body: VoteInputDto): Observable<Result<boolean>> {
+    return this.http.post<Result<boolean>>(
       `${this.baseUrl}/api/Voter/${id}/Vote`,
       body
     );
   }
 
-  getLastVotingRound(): Observable<VotingRoundInfoDtoResult> {
-    return this.http.get<VotingRoundInfoDtoResult>(
+  getLastVotingRound(): Observable<Result<VotingRoundInfoDto>> {
+    return this.http.get<Result<VotingRoundInfoDto>>(
       `${this.baseUrl}/api/VotingRound/Last`
     );
   }
 
-  getCandidatesByRound(id: number): Observable<CandidateInfoDtoIEnumerableResult> {
-    return this.http.get<CandidateInfoDtoIEnumerableResult>(
+  getCandidatesByRound(id: number): Observable<Result<CandidateInfoDto[]>> {
+    return this.http.get<Result<CandidateInfoDto[]>>(
       `${this.baseUrl}/api/VotingRound/${id}/Candidates`
     );
   }
