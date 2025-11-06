@@ -30,18 +30,18 @@
   align-items: center;
   gap: 30px;
   width: 100%;
-  /* Ahora todos los grupos tienen el mismo largo que .form-container */
 }
 
 .form-group label {
   color: white;
   font-size: 20px;
-  min-width: 145px;  /* Este valor asegura alineación. Ajusta a tu gusto */
+  min-width: 145px;
   text-align: right;
   font-weight: normal;
   margin: 0;
 }
 
+/* Aplica a input y select */
 .input-field {
   flex: 1 1 0;
   padding: 12px 15px;
@@ -50,10 +50,27 @@
   font-size: 16px;
   background: white;
   min-width: 0;
+  box-sizing: border-box;
+  appearance: none;
+  -webkit-appearance: none;
+  line-height: 1.25;
 }
 
+/* Igual para select desplegable */
 .input-field:focus {
-  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline: 2px solid rgba(44, 24, 84, 0.36);
+}
+
+.input-field option[disabled] {
+  color: #bbb;
+}
+
+/* Mejora la apariencia del select en Chrome y Firefox */
+select.input-field {
+  background: white url("data:image/svg+xml;charset=UTF-8,<svg width='18' height='12' viewBox='0 0 18 12' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M2 4L9 11L16 4' stroke='%23666' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat right 11px center/18px 13px;
+  /* Puedes cambiar el color y tamaño del ícono */
+  padding-right: 36px;
+  cursor: pointer;
 }
 
 .btn-establecer {

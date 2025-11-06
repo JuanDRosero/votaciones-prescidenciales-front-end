@@ -17,8 +17,9 @@ import { firstValueFrom } from 'rxjs';
 export class ConfigurarPeriodoComponent {
   nombreUsuario: string = '';
   fecha: string = '';
-  horaInicio: string = '';
-  horaFin: string = '';
+  horaInicio: number | null = null;
+  horaFin: number | null = null;
+  horas: number[] = [];
 
   constructor(
     private router: Router,
@@ -28,11 +29,11 @@ export class ConfigurarPeriodoComponent {
   ) {
     const user = this.authService.getCurrentUser();
     this.nombreUsuario = user || 'Usuario';
+    this.horas = Array.from({length: 24}, (_, i) => i); // [0,1,...,23]
   }
 
-  async establecer() {
-    // Validación de datos
-    if (!this.fecha || !this.horaInicio || !this.horaFin) {
+ async establecer() {
+    if (!this.fecha || this.horaInicio === null || this.horaFin === null) {
       this.snackBar.open('Por favor complete todos los campos', 'Cerrar', {
         duration: 3000,
         horizontalPosition: 'center',
