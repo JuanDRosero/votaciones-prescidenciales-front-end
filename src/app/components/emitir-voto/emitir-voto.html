@@ -18,7 +18,7 @@
     aria-label="Seleccionar candidato {{c.name}}"
   >
     <div class="frame-img-box">
-      <ng-container *ngIf="c.id === -1; else votoBlancoBlock">
+      <ng-container *ngIf="c.id !== -1; else votoBlancoBlock">
         <img src="assets/candidato.png" class="candidato-img" alt="Foto de {{c.name}}" />
       </ng-container>
       <ng-template #votoBlancoBlock>
@@ -27,7 +27,7 @@
         </div>
       </ng-template>
     </div>
-    <ng-container *ngIf="c.id === -1">
+    <ng-container *ngIf="c.id !== -1">
       <div class="info-candidato nombre">{{ c.name }}</div>
       <div class="info-candidato numero">N° {{ c.id }}</div>  <!--Jordi hay que modificar esto-->
       <div class="info-candidato partido">{{ c.politicalParty }}</div>

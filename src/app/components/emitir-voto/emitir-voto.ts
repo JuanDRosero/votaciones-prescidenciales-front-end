@@ -10,7 +10,7 @@ import { AppService, CandidateInfoDto, VoteInputDto } from '../../services/app-s
   styleUrl: './emitir-voto.css'
 })
 export class EmitirVotoComponent {
-  idVotingRound : number = 6;
+  idVotingRound : number = 8;
   identificationVoter: number=1100000001;
   candidatos: CandidateInfoDto[] = [];
 
