@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { AdminApiService, InputVotingRound } from '../../services/admin-service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-configurar-periodo',
@@ -21,13 +23,14 @@ export class ConfigurarPeriodoComponent {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private adminService: AdminApiService
   ) {
     const user = this.authService.getCurrentUser();
     this.nombreUsuario = user || 'Usuario';
   }
 
-  establecer(): void {
+  async establecer() {
     // Validación de datos
     if (!this.fecha || !this.horaInicio || !this.horaFin) {
       this.snackBar.open('Por favor complete todos los campos', 'Cerrar', {
@@ -39,39 +42,29 @@ export class ConfigurarPeriodoComponent {
       return;
     }
 
-    // Aquí la lógica para guardar el periodo
-    console.log('Configuración guardada:', {
-      fecha: this.fecha,
-      horaInicio: this.horaInicio,
-      horaFin: this.horaFin
-    });
+    const periodo : InputVotingRound = {
+        date: this.fecha,
+        beggingHour: Number(this.horaInicio),
+        endingHour: Number(this.horaFin)
+    };
 
-    this.snackBar.open('✓ Periodo de votación configurado exitosamente', 'Cerrar', {
-      duration: 3500,
-      horizontalPosition: 'center',
-      verticalPosition: 'top',
-      panelClass: ['success-snackbar']
-    });
-  }
-
-  cargarCandidatos(): void {
-    this.router.navigate(['/cargar-candidatos']);
-  }
-
-  cargarVotantes(): void {
-    this.router.navigate(['/cargar-votantes']);
-  }
-
-  consultarResultados(): void {
-    this.router.navigate(['/consultar-resultados']);
-  }
-
-  configurarPeriodo(): void {
-    this.router.navigate(['/configurar-periodo']);
-  }
-
-  cerrarSesion(): void {
-    this.authService.logout();
-    this.router.navigate(['/']);
+    try {
+            const response = await firstValueFrom(this.adminService.uploadVotingRound(periodo));
+    
+            this.snackBar.open('✓ Se creó la vuelta de votación', 'Cerrar', {
+              duration: 3500,
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+              panelClass: ['success-snackbar']
+            });
+          } catch (error) {
+            console.error('Error al cargar votantes:', error);
+            this.snackBar.open('✗ Error al crear la vuelta de votación', 'Cerrar', {
+              duration: 5000,
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+              panelClass: ['error-snackbar']
+            });
+          }
   }
 }

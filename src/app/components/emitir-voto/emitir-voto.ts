@@ -1,13 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-interface Candidato {
-  id: string;
-  nombre: string;
-  numero: number;
-  partido: string;
-  imagen: string;
-}
+import { appService, CandidateInfoDto, VoteInputDto } from '../../services/app-service';
 
 @Component({
   selector: 'app-emitir-voto',
@@ -17,30 +10,62 @@ interface Candidato {
   styleUrl: './emitir-voto.css'
 })
 export class EmitirVotoComponent {
-  candidatos: Candidato[] = [
-    { id: '1', numero: 1, nombre: 'Candidato 1', partido: 'Partido 1', imagen: 'assets/candidato1.png' },
-    { id: '2', numero: 2, nombre: 'Candidato 2', partido: 'Partido 2', imagen: 'assets/candidato2.png' },
-    { id: '3', numero: 3, nombre: 'Candidato 3', partido: 'Partido 3', imagen: 'assets/candidato3.png' },
-    { id: '4', numero: 4, nombre: 'Candidato 4', partido: 'Partido 4', imagen: 'assets/candidato4.png' },
-    { id: '5', numero: 5, nombre: 'Candidato 5', partido: 'Partido 5', imagen: 'assets/candidato5.png' },
-    { id: 'blanco', numero: 6, nombre: 'Voto en blanco', partido: 'Ninguno', imagen: 'assets/blanco.png' }
-  ];
+  idVotingRound : number = 6;
+  identificationVoter: number=1100000001;
+  candidatos: CandidateInfoDto[] = [];
 
-  candidatoSeleccionado: Candidato | null = null;
+  constructor (private appService : appService){
+    this.obtenerCandidatos(this.idVotingRound);
+  }
+
+  candidatoSeleccionado: CandidateInfoDto | null = null;
   mostrarConfirmacion: boolean = false;
   mostrarCertificado: boolean = false;
 
-  seleccionarCandidato(candidato: Candidato): void {
+  obtenerCandidatos(idRonda: number): void {
+
+    this.appService.getCandidatesByRound(idRonda).subscribe({
+      next: (respuesta) => {
+        if (!respuesta.hasError && respuesta.data) {
+          this.candidatos = respuesta.data;
+        } else {
+          console.log(respuesta.message ?? 'Error al obtener candidatos');
+        }
+      },
+      error: (error) => {
+        console.error('Error HTTP:', error);
+      }
+    });
+  }
+
+  seleccionarCandidato(candidato: CandidateInfoDto): void {
     this.candidatoSeleccionado = candidato;
     this.mostrarConfirmacion = true;
   }
 
   confirmarVoto(): void {
-    if (this.candidatoSeleccionado) {
-      // Lógica para guardar voto, enviar correo, etc.
-      // Aquí normalmente iría la llamada a la API
-      this.mostrarCertificado = true;
-    }
+      if (this.candidatoSeleccionado) {
+    const body: VoteInputDto = {
+      idVotingRound: this.idVotingRound,          // 👈 Debes tenerlo en el componente
+      idCandidate: this.candidatoSeleccionado.id  // 👈 Viene del candidato seleccionado
+    };
+
+    this.appService.vote(this.identificationVoter, body).subscribe({
+      next: (respuesta) => {
+        if (!respuesta.hasError && respuesta.data === true) {
+          console.log('✅ Voto registrado correctamente');
+          this.mostrarCertificado = true;
+        } else {
+          console.error('⚠️ Error al votar:', respuesta.message);
+          alert(respuesta.message ?? 'No se pudo registrar el voto.');
+        }
+      },
+      error: (error) => {
+        console.error('❌ Error HTTP al votar:', error);
+        alert('Error de conexión con el servidor');
+      }
+    });
+  }
     this.mostrarConfirmacion = false;
   }
 

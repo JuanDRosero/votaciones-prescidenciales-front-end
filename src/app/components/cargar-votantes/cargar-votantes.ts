@@ -73,7 +73,6 @@ export class CargarVotantesComponent {
     if (this.selectedFile) {
       try {
         const response = await firstValueFrom(this.adminService.uploadVoter(this.selectedFile));
-        console.log("Se cargaron un total de %d registros", response.data);
 
         this.snackBar.open(`✓ Se cargaron exitosamente ${response.data} votantes`, 'Cerrar', {
           duration: 4000,

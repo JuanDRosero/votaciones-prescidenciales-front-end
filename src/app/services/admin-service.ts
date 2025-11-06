@@ -7,6 +7,11 @@ export interface Result<T> {
   message?: string;
   data: T | null;
 }
+export interface InputVotingRound{
+  date: string,
+  beggingHour: number,
+  endingHour: number
+}
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +49,13 @@ export class AdminApiService {
     return this.http.post<Result<number>>(
       `${this.baseUrl}/api/Voter`,
       formData
+    );
+  }
+  uploadVotingRound(dto : InputVotingRound): Observable<Result<number>>{
+        
+    return this.http.post<Result<number>>(
+      `${this.baseUrl}/api/VotingRound`,
+      dto
     );
   }
 }
