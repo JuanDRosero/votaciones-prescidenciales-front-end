@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppService, CandidateInfoDto, VoteInputDto, VotingRoundInfoDto } from '../../services/app-service';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-emitir-voto',
@@ -11,13 +12,17 @@ import { AppService, CandidateInfoDto, VoteInputDto, VotingRoundInfoDto } from '
 })
 export class EmitirVotoComponent {
   idVotingRound!: number;
-  identificationVoter: number = 1100000001;
   candidatos: CandidateInfoDto[] = [];
   candidatoSeleccionado: CandidateInfoDto | null = null;
   mostrarConfirmacion: boolean = false;
   mostrarCertificado: boolean = false;
+  mostrarErrorVoto: boolean = false;
+  mensajeErrorVoto: string = '';
 
-  constructor(private appService: AppService) {
+  constructor(
+    private appService: AppService,
+    private authService: AuthService
+  ) {
     // Consulta el id de la ronda antes de obtener candidatos
     this.appService.getLastVotingRound().subscribe({
       next: res => {
@@ -56,32 +61,54 @@ export class EmitirVotoComponent {
   }
 
   confirmarVoto(): void {
-    if (this.candidatoSeleccionado && this.idVotingRound) {
+    // Toma identificación DEL USUARIO ACTUAL
+    const identificationVoter = this.authService.getCurrentVoterId();
+    if (this.candidatoSeleccionado && this.idVotingRound && identificationVoter) {
       const body: VoteInputDto = {
         idVotingRound: this.idVotingRound,
         idCandidate: this.candidatoSeleccionado.id
       };
-      this.appService.vote(this.identificationVoter, body).subscribe({
+      this.appService.vote(identificationVoter, body).subscribe({
         next: (respuesta) => {
           if (!respuesta.hasError && respuesta.data === true) {
-            console.log('✅ Voto registrado correctamente');
             this.mostrarCertificado = true;
           } else {
-            console.error('⚠️ Error al votar:', respuesta.message);
             alert(respuesta.message ?? 'No se pudo registrar el voto.');
           }
         },
         error: (error) => {
+          let backendMsg = '';
+          if (error.error && typeof error.error === 'object') {
+            backendMsg = error.error.message || '';
+          } else if (error.error && typeof error.error === 'string') {
+            try {
+              const errObj = JSON.parse(error.error);
+              backendMsg = errObj.message || '';
+            } catch(e) {}
+          }
+          if (backendMsg.toLowerCase().includes('alredy voted') || backendMsg.toLowerCase().includes('already voted')) {
+            this.mensajeErrorVoto = 'No está habilitado para votar porque ya ejerció su derecho en esta vuelta de elecciones. Si requiere aclaración contacte a un funcionario.';
+            this.mostrarErrorVoto = true;
+          } else {
+            alert(backendMsg || 'Error de conexión con el servidor');
+          }
           console.error('❌ Error HTTP al votar:', error);
-          alert('Error de conexión con el servidor');
         }
       });
+    } else {
+      alert('No se pudo determinar el identificador del votante.');
     }
     this.mostrarConfirmacion = false;
   }
 
   cancelarVoto(): void {
     this.mostrarConfirmacion = false;
+    this.candidatoSeleccionado = null;
+  }
+
+  cerrarErrorVoto(): void {
+    this.mostrarErrorVoto = false;
+    this.mensajeErrorVoto = '';
     this.candidatoSeleccionado = null;
   }
 

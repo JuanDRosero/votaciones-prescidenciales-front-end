@@ -93,4 +93,11 @@ export class AuthService {
   isLoggedIn(): boolean {
     return this.currentUser !== null;
   }
+
+  getCurrentVoterId(): number | null {
+  if (this.currentRole === 'votante') {
+    return this.currentUser ? Number(this.currentUser) : null;
+  }
+  return null;
+}
 }

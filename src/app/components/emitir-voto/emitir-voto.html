@@ -29,7 +29,7 @@
     </div>
     <ng-container *ngIf="c.id !== -1">
       <div class="info-candidato nombre">{{ c.name }}</div>
-      <div class="info-candidato numero">N° {{ c.number }}</div>  <!--Jordi hay que modificar esto-->
+      <div class="info-candidato numero">N° {{ c.number }}</div>  <!-- Jordi hay que modificar esto -->
       <div class="info-candidato partido">{{ c.politicalParty }}</div>
     </ng-container>
     <ng-container *ngIf="c.id === -1">
@@ -37,7 +37,6 @@
     </ng-container>
   </div>
 </div>
-
 
 <!-- Pop-up de confirmación del voto -->
 <div class="popup-confirm" *ngIf="mostrarConfirmacion">
@@ -49,6 +48,19 @@
     <div class="popup-btns">
       <button class="btn-si" (click)="confirmarVoto()">SÍ</button>
       <button class="btn-no" (click)="cancelarVoto()">NO</button>
+    </div>
+  </div>
+</div>
+
+<!-- Pop-up de error: el usuario ya ha votado -->
+<div class="popup-confirm" *ngIf="mostrarErrorVoto">
+  <div class="popup-card popup-error-card">
+    <button class="btn-cerrar-popup" (click)="cerrarErrorVoto()" aria-label="Cerrar pop-up">&#10006;</button>
+    <div class="popup-msg popup-msg-error">
+      {{ mensajeErrorVoto }}
+    </div>
+    <div class="popup-btns">
+      <button class="btn-no" (click)="cerrarErrorVoto()">Aceptar</button>
     </div>
   </div>
 </div>
