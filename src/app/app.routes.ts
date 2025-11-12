@@ -9,6 +9,7 @@ import { CargarCandidatosComponent } from './components/cargar-candidatos/cargar
 import { CargarVotantesComponent } from './components/cargar-votantes/cargar-votantes';
 import { ConfigurarPeriodoComponent } from './components/configurar-periodo/configurar-periodo';
 import { ConsultarResultadosComponent } from './components/consultar-resultados/consultar-resultados';
+import { SimularVotacionComponent } from './components/simular-votacion/simular-votacion';
 // Votante Components
 import { VotanteLayoutComponent } from './components/votante-layout/votante-layout';
 import { BienvenidaVotanteComponent } from './components/bienvenida-votante/bienvenida-votante';
@@ -29,8 +30,8 @@ export const routes: Routes = [
       { path: 'cargar-votantes', component: CargarVotantesComponent, canActivate: [AuthGuard] },
       { path: 'configurar-periodo', component: ConfigurarPeriodoComponent, canActivate: [AuthGuard] },
       { path: 'consultar-resultados', component: ConsultarResultadosComponent, canActivate: [AuthGuard] },
-      // Puedes agregar:
-      // { path: 'simular-votacion', component: SimularVotacionComponent, canActivate: [AuthGuard] }
+      { path: 'simular-votacion', component: SimularVotacionComponent, canActivate: [AuthGuard] }
+
     ]
   },
 

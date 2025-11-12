@@ -77,23 +77,29 @@ export class EmitirVotoComponent {
           }
         },
         error: (error) => {
-          let backendMsg = '';
-          if (error.error && typeof error.error === 'object') {
-            backendMsg = error.error.message || '';
-          } else if (error.error && typeof error.error === 'string') {
-            try {
-              const errObj = JSON.parse(error.error);
-              backendMsg = errObj.message || '';
-            } catch(e) {}
-          }
-          if (backendMsg.toLowerCase().includes('alredy voted') || backendMsg.toLowerCase().includes('already voted')) {
-            this.mensajeErrorVoto = 'No está habilitado para votar porque ya ejerció su derecho en esta vuelta de elecciones. Si requiere aclaración contacte a un funcionario.';
-            this.mostrarErrorVoto = true;
-          } else {
-            alert(backendMsg || 'Error de conexión con el servidor');
-          }
-          console.error('❌ Error HTTP al votar:', error);
-        }
+  let backendMsg = '';
+  if (error.error && typeof error.error === 'object') {
+    backendMsg = error.error.message || '';
+  } else if (error.error && typeof error.error === 'string') {
+    try {
+      const errObj = JSON.parse(error.error);
+      backendMsg = errObj.message || '';
+    } catch(e) {}
+  }
+  if (
+    backendMsg.toLowerCase().includes('alredy voted') ||
+    backendMsg.toLowerCase().includes('already voted')
+  ) {
+    this.mensajeErrorVoto = 'No está habilitado para votar porque ya ejerció su derecho en esta vuelta de elecciones. Si requiere aclaración contacte a un funcionario.';
+    this.mostrarErrorVoto = true;
+  } else if (backendMsg.toLowerCase().includes('voting round is not open')) {
+    this.mensajeErrorVoto = 'La vuelta de votación está cerrada. No es posible registrar votos en este momento.';
+    this.mostrarErrorVoto = true;
+  } else {
+    alert(backendMsg || 'Error de conexión con el servidor');
+  }
+  console.error('❌ Error HTTP al votar:', error);
+}
       });
     } else {
       alert('No se pudo determinar el identificador del votante.');

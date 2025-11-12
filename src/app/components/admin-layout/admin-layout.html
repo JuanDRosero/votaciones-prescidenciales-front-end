@@ -24,6 +24,12 @@
       (click)="consultarResultados()">
       Consultar Resultados
     </button>
+    <button
+      class="menu-item"
+      [class.active]="isActive('simular-votacion')"
+      (click)="simularVotacion()">
+      Simular Votación
+    </button>
   </div>
 
   <div class="main-content">
