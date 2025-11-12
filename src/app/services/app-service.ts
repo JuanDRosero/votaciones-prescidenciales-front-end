@@ -21,6 +21,7 @@ export interface VoteInputDto {
 
 export interface CandidateInfoDto {
   id: number;
+  number: number;
   name?: string;
   lastName?: string;
   politicalParty?: string;
