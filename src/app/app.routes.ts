@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './services/auth-guard'; // <-- AGREGA ESTA LÍNEA
 import { HomeComponent } from './components/home/home';
 import { LoginComponent } from './components/login/login';
 // Admin Components
@@ -13,29 +14,36 @@ import { VotanteLayoutComponent } from './components/votante-layout/votante-layo
 import { BienvenidaVotanteComponent } from './components/bienvenida-votante/bienvenida-votante';
 import { EmitirVotoComponent } from './components/emitir-voto/emitir-voto';
 
-
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
+
+  // Admin: solo accesible si el rol es admin
   {
     path: 'admin',
     component: AdminLayoutComponent,
+    canActivate: [AuthGuard], // <--- PROTEGE TODO EL PANEL
     children: [
-      { path: '', component: AdminPanelComponent },
-      { path: 'cargar-candidatos', component: CargarCandidatosComponent },
-      { path: 'cargar-votantes', component: CargarVotantesComponent },
-      { path: 'configurar-periodo', component: ConfigurarPeriodoComponent },
-      { path: 'consultar-resultados', component: ConsultarResultadosComponent }
+      { path: '', component: AdminPanelComponent, canActivate: [AuthGuard] },
+      { path: 'cargar-candidatos', component: CargarCandidatosComponent, canActivate: [AuthGuard] },
+      { path: 'cargar-votantes', component: CargarVotantesComponent, canActivate: [AuthGuard] },
+      { path: 'configurar-periodo', component: ConfigurarPeriodoComponent, canActivate: [AuthGuard] },
+      { path: 'consultar-resultados', component: ConsultarResultadosComponent, canActivate: [AuthGuard] },
+      // Puedes agregar:
+      // { path: 'simular-votacion', component: SimularVotacionComponent, canActivate: [AuthGuard] }
     ]
   },
+
+  // Votante: solo accesible si el rol es votante
   {
     path: 'votante',
     component: VotanteLayoutComponent,
+    canActivate: [AuthGuard], // <--- PROTEGE TODO EL PANEL
     children: [
-      { path: '', component: BienvenidaVotanteComponent },
-      { path: 'emitir-voto', component: EmitirVotoComponent }
-
+      { path: '', component: BienvenidaVotanteComponent, canActivate: [AuthGuard] },
+      { path: 'emitir-voto', component: EmitirVotoComponent, canActivate: [AuthGuard] }
     ]
   },
+
   { path: '**', redirectTo: '' }
 ];

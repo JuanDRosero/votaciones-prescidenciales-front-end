@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Result } from './admin-service';
+import { Result } from './result.model';
 
 export interface VoterLoginDto {
   identificationNumber: number;
@@ -38,6 +38,7 @@ export interface VotingRoundInfoDto {
 })
 export class AppService {
   private baseUrl = 'http://localhost:5212'; // <-- Cambia esto
+  //private baseUrl = 'http://localhost:5087';
 
   constructor(private http: HttpClient) {}
 

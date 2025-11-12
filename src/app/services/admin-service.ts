@@ -2,11 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-export interface Result<T> {
-  hasError: boolean;
-  message?: string;
-  data: T | null;
-}
+import { Result } from './result.model';
+
 export interface InputVotingRound{
   date: string,
   beggingHour: number,
@@ -52,7 +49,7 @@ export class AdminApiService {
     );
   }
   uploadVotingRound(dto : InputVotingRound): Observable<Result<number>>{
-        
+
     return this.http.post<Result<number>>(
       `${this.baseUrl}/api/VotingRound`,
       dto
