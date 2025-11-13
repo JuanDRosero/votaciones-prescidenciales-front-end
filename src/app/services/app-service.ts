@@ -68,4 +68,10 @@ export class AppService {
       `${this.baseUrl}/api/VotingRound/${id}/Candidates`
     );
   }
+    getCertificate(voterId: number, votingRoundID: number) {
+      return this.http.get(
+            `${this.baseUrl}/api/Voter/${voterId}/Certificate/${votingRoundID}`,
+            { responseType: 'blob' }
+          );
+  }
 }

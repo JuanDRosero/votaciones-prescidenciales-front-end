@@ -55,4 +55,9 @@ export class AdminApiService {
       dto
     );
   }
+    generateRandomVotes(idVotingRound: number): Observable<Result<number>>{
+
+    return this.http.post<Result<number>>(
+      `${this.baseUrl}/api/VotingRound/${idVotingRound}/GenerateVotes`,{});
+  }
 }

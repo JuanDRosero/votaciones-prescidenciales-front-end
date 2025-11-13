@@ -119,9 +119,25 @@ export class EmitirVotoComponent {
   }
 
   descargarCertificado(): void {
-    alert('Descargando certificado, funcionalidad pendiente.');
-    this.mostrarCertificado = false;
-    this.candidatoSeleccionado = null;
+    const identificationVoter = this.authService.getCurrentVoterId();
+    this.appService.getCertificate(identificationVoter!, this.idVotingRound).subscribe(
+    blob => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'certificado.pdf';
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+      // OPCIONAL: cerrar el popup de certificado
+      this.mostrarCertificado = false;
+      this.candidatoSeleccionado = null;
+    },
+    err => {
+      alert('No se pudo descargar el certificado.');
+    }
+  );
   }
 
   cerrarCertificado(): void {
