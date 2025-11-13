@@ -9,14 +9,25 @@ export interface InputVotingRound{
   beggingHour: number,
   endingHour: number
 }
+export interface CandidateResult {
+  id: number;
+  number: number;
+  name: string;
+  politicalParty: string;
+  votes: number;
+}
+export interface VotingSummary {
+  total: number;
+  votesInformation: CandidateResult[];
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminApiService {
 
-  private baseUrl = 'voting-admin-app-czh3e2dgexayawb2.canadacentral-01.azurewebsites.net';
-  //private baseUrl = 'http://localhost:5087';
+  //private baseUrl = 'voting-admin-app-czh3e2dgexayawb2.canadacentral-01.azurewebsites.net';
+  private baseUrl = 'http://localhost:5087';
 
   constructor(private http: HttpClient) {}
 
@@ -60,5 +71,9 @@ export class AdminApiService {
 
     return this.http.post<Result<number>>(
       `${this.baseUrl}/api/VotingRound/${idVotingRound}/GenerateVotes`,{});
+  }
+    getResult(idVotingRound: number): Observable<Result<VotingSummary>> {
+    return this.http.get<Result<VotingSummary>>(
+      `${this.baseUrl}/api/VotingRound/${idVotingRound}`);
   }
 }

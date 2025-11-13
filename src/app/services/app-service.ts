@@ -38,8 +38,8 @@ export interface VotingRoundInfoDto {
   providedIn: 'root'
 })
 export class AppService {
-  private baseUrl = 'voting-app-cganf3ahauewbzge.canadacentral-01.azurewebsites.net';
-  //private baseUrl = 'http://localhost:5212'; // <-- Cambia esto
+  //private baseUrl = 'voting-app-cganf3ahauewbzge.canadacentral-01.azurewebsites.net';
+  private baseUrl = 'http://localhost:5212'; // <-- Cambia esto
   //private baseUrl = 'http://localhost:5087';
 
   constructor(private http: HttpClient) {}

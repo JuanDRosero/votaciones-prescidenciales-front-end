@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { firstValueFrom } from 'rxjs';
+import { AppService } from '../../services/app-service';
+import { AdminApiService } from '../../services/admin-service';
 @Component({
   selector: 'app-simular-votacion',
   standalone: true,
@@ -11,6 +14,12 @@ export class SimularVotacionComponent {
   mostrarConfirmacion = false;
   mostrarResultado = false;
 
+  /**
+   *
+   */
+  constructor(private appService : AppService,
+    private adminService : AdminApiService
+  ) {}
   abrirPopup() {
     this.mostrarConfirmacion = true;
   }
@@ -29,9 +38,9 @@ export class SimularVotacionComponent {
     this.mostrarResultado = false;
   }
 
-  simulacion() {
-    // Aquí llamas tu API de simulación o lógica
-    // Ejemplo: this.appService.simularVotacion()...
+  async simulacion() {
+    const data = await firstValueFrom(this.appService.getLastVotingRound());
+    const dataSimulado = await firstValueFrom(this.adminService.generateRandomVotes(data.data!.votingRoundId));
     console.log('Simulación ejecutada');
   }
 }

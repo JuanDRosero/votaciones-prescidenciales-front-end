@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { AdminApiService } from '../../services/admin-service';
+import { AppService } from '../../services/app-service';
+import { firstValueFrom, Observable } from 'rxjs';
 
 interface ResultadoCandidato {
   nombre: string;
@@ -22,11 +25,26 @@ interface ResultadoCandidato {
 export class ConsultarResultadosComponent {
   anio: number = 2025;
   mensajePendiente: string = 'Votación pendiente de realizar, la siguiente gráfica es una demostración de los resultados';
-  resultados: ResultadoCandidato[] = [
-    { nombre: 'Candidato 1', porcentaje: 70, color: '#65b100', foto: 'assets/candidato.png' },
-    { nombre: 'Candidato 2', porcentaje: 25, color: '#ffa726', foto: 'assets/candidato.png' },
-    { nombre: 'Candidato 3', porcentaje: 5, color: '#ffe14b', foto: 'assets/candidato.png' },
-    { nombre: 'Candidato 4', porcentaje: 0, color: '#a7bed4', foto: 'assets/candidato.png' },
-    { nombre: 'Candidato 5', porcentaje: 0, color: '#8e2323', foto: 'assets/candidato.png' }
-  ];
+  resultados: ResultadoCandidato[] = [];
+  /**
+   *
+   */
+  constructor(private adminService : AdminApiService,
+    private appService: AppService
+  ) {
+    this.cargarResultado().then(res => {
+      this.resultados = res;
+    });
+  }
+  async cargarResultado() : Promise<ResultadoCandidato[]>{
+    const dataVR = await firstValueFrom(this.appService.getLastVotingRound());
+    const data = await firstValueFrom(this.adminService.getResult(dataVR.data!.votingRoundId));
+
+    return data.data!.votesInformation.map(item => ({
+      nombre: item.name,
+      porcentaje: item.votes / data.data!.total *100,
+      color: "#8e2323",
+      foto: 'assets/candidato.png'
+    }));
+  }
 }
