@@ -1,0 +1,115 @@
+.contenedor-simulacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+}
+
+.btn-simular {
+  background: #0c419b;
+  color: #fff;
+  font-size: 1.19em;
+  border: none;
+  padding: 18px 56px;
+  border-radius: 11px;
+  font-weight: bold;
+  box-shadow: 0 4px 18px #233a6a25;
+  cursor: pointer;
+  letter-spacing: 1.2px;
+  margin-top: 28px;
+  margin-bottom: 28px;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.btn-simular:hover, .btn-simular:focus {
+  background: #05275e;
+  box-shadow: 0 6px 26px #233a6a55;
+}
+
+/* POPUPS - igual que tus otros popups para unificación visual */
+.popup-confirm {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(22,46,98,0.56);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+.popup-card {
+  min-width: 330px;
+  background: #fff;
+  border-radius: 17px;
+  box-shadow: 0 8px 40px #233a6a88;
+  padding: 40px 38px 32px 38px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.btn-cerrar-popup {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #e30022;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  font-weight: bold;
+}
+.btn-cerrar-popup:hover {
+  color: #bf0025;
+}
+.popup-msg {
+  font-size: 1.22em;
+  color: #0a2250;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 28px;
+  line-height: 1.41;
+}
+.popup-btns {
+  display: flex; gap: 34px; justify-content: center;
+}
+.btn-si {
+  background: #119d3a;
+  color: #fff;
+  font-size: 1.15em;
+  border: none;
+  padding: 13px 38px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-si:hover {
+  background: #08772c;
+}
+.btn-no {
+  background: #e30022;
+  color: #fff;
+  font-size: 1.15em;
+  border: none;
+  padding: 13px 38px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-no:hover {
+  background: #bf0025;
+}
+
+/* Responsive para móvil */
+@media (max-width: 580px) {
+  .popup-card {
+    min-width: 0;
+    width: 94vw;
+    padding: 14px 4vw 20px 4vw;
+  }
+  .contenedor-simulacion {
+    padding: 0 12px;
+  }
+}

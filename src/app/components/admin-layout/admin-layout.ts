@@ -41,6 +41,9 @@ export class AdminLayoutComponent implements OnInit {
 simularVotacion() {
   this.router.navigate(['/admin/simular-votacion']);
 }
+cerrarVotacion() {
+  this.router.navigate(['/admin/cerrar-votacion']);
+}
   cerrarSesion(): void {
     this.authService.logout();
     this.router.navigate(['/']);

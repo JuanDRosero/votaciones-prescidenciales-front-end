@@ -14,6 +14,7 @@ import { SimularVotacionComponent } from './components/simular-votacion/simular-
 import { VotanteLayoutComponent } from './components/votante-layout/votante-layout';
 import { BienvenidaVotanteComponent } from './components/bienvenida-votante/bienvenida-votante';
 import { EmitirVotoComponent } from './components/emitir-voto/emitir-voto';
+import { CerrarVotacion } from './components/cerrar-votacion/cerrar-votacion';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -30,7 +31,8 @@ export const routes: Routes = [
       { path: 'cargar-votantes', component: CargarVotantesComponent, canActivate: [AuthGuard] },
       { path: 'configurar-periodo', component: ConfigurarPeriodoComponent, canActivate: [AuthGuard] },
       { path: 'consultar-resultados', component: ConsultarResultadosComponent, canActivate: [AuthGuard] },
-      { path: 'simular-votacion', component: SimularVotacionComponent, canActivate: [AuthGuard] }
+      { path: 'simular-votacion', component: SimularVotacionComponent, canActivate: [AuthGuard] },
+      { path: 'cerrar-votacion', component: CerrarVotacion, canActivate: [AuthGuard]}
 
     ]
   },

@@ -76,4 +76,9 @@ export class AdminApiService {
     return this.http.get<Result<VotingSummary>>(
       `${this.baseUrl}/api/VotingRound/${idVotingRound}`);
   }
+  closeRoundingVote(idVotingRound: number): Observable<Result<number>>{
+    return this.http.patch<Result<number>>(
+      `${this.baseUrl}/api/VotingRound/${idVotingRound}/Close`,
+    {});
+  }
 }

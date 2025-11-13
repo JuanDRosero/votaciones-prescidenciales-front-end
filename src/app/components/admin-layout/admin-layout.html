@@ -30,6 +30,12 @@
       (click)="simularVotacion()">
       Simular Votación
     </button>
+      <button
+      class="menu-item"
+      [class.active]="isActive('simular-votacion')"
+      (click)="cerrarVotacion()">
+      Cerrar Votación
+    </button>
   </div>
 
   <div class="main-content">

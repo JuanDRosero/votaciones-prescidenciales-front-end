@@ -1,0 +1,26 @@
+<div class="contenedor-simulacion">
+  <button class="btn-simular" (click)="abrirPopup()">Cerrar Votación</button>
+</div>
+
+<!-- Popup de confirmación -->
+<div class="popup-confirm" *ngIf="mostrarConfirmacion">
+  <div class="popup-card">
+    <div class="popup-msg">
+      ¿Estás seguro que deseas cerrar de votación?
+    </div>
+    <div class="popup-btns">
+      <button class="btn-si" (click)="confirmarCerrarVotacion()">SÍ</button>
+      <button class="btn-no" (click)="cancelarCerrarVoto()">NO</button>
+    </div>
+  </div>
+</div>
+
+<!-- Popup de resultado de simulación -->
+<div class="popup-confirm" *ngIf="mostrarResultado">
+  <div class="popup-card">
+    <button class="btn-cerrar-popup" (click)="cerrarResultado()" aria-label="Cerrar pop-up">&#10006;</button>
+    <div class="popup-msg">
+      Votación cerrada.
+    </div>
+  </div>
+</div>
