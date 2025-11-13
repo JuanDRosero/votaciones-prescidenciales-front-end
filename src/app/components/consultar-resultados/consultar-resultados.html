@@ -3,30 +3,24 @@
     <div>Elecciones presidenciales {{ anio }}</div>
     <div style="margin-top: 4px;">Consultar Resultados</div>
   </div>
-  <div *ngIf="mensajePendiente" class="mensaje-pendiente">
-    Votación pendiente de realizar, la siguiente gráfica es una demostración de los resultados
-  </div>
-  <div class="grafica-barras">
-    <div *ngFor="let r of resultados" class="barra-columna">
-      <div class="columna-barra">
-        <div
-          class="barra"
-          [ngStyle]="{ 'height': (r.porcentaje * 2) + 'px', 'background': r.color }">
-        </div>
-        <img
-          [src]="r.foto"
-          alt="Foto de {{r.nombre}}"
-          class="foto-candidato"
-          [ngStyle]="{ 'bottom': ((r.porcentaje * 2) + 38) + 'px' }"
-        />
-        <span
-          class="porcentaje"
-          [ngStyle]="{ 'bottom': ((r.porcentaje * 2) + 7) + 'px' }"
-        >
-          {{ r.porcentaje }}%
-        </span>
+  @if (isPending) {
+      <div class="mensaje-pendiente">
+        La votación aún no se ha cerrado, por favor espere antes de consultar los resultados
       </div>
-      <div class="nombre-candidato">{{ r.nombre }}</div>
+  }@else {
+    <div id="chart">
+      <apx-chart
+        #chart
+        [series]="chartOptions.series!"
+        [chart]="chartOptions.chart!"
+        [xaxis]="chartOptions.xaxis!"
+        [dataLabels]="chartOptions.dataLabels!"
+        [plotOptions]="chartOptions.plotOptions!"
+        [yaxis]="chartOptions.yaxis!"
+        [fill]="chartOptions.fill!"
+        [grid]="chartOptions.grid!"
+        [title]="chartOptions.title!">
+      </apx-chart>
     </div>
-  </div>
-</div>
+  }
+   
