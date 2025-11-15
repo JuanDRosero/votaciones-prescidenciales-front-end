@@ -26,8 +26,8 @@ export interface VotingSummary {
 })
 export class AdminApiService {
 
-  //private baseUrl = 'voting-admin-app-czh3e2dgexayawb2.canadacentral-01.azurewebsites.net';
-  private baseUrl = 'http://localhost:5087';
+  private baseUrl = 'https://voting-admin-app-czh3e2dgexayawb2.canadacentral-01.azurewebsites.net';
+  //private baseUrl = 'http://localhost:5087';
 
   constructor(private http: HttpClient) {}
 
